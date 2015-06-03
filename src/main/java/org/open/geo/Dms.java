@@ -89,7 +89,7 @@ public class Dms {
         precision = 0;
       }
     }
-    deg = Math.abs(deg);  // (unsigned result ready for appending compass dir'n)
+    deg = Math.abs(deg);
 
     String dms = null;
     Double degree, min, sec;
@@ -184,10 +184,8 @@ public class Dms {
   public static String compassPoint(Double bearing, Integer precision) {
     if (precision == null) precision = 3;
     if(precision > 3 ) precision = 3;
-    // note precision = max length of compass point; it could be extended to 4 for quarter-winds
-    // (eg NEbN), but I think they are little used
 
-    bearing = ((bearing%360)+360)%360; // normalise to 0..360
+    bearing = ((bearing%360)+360)%360;
 
     String point = null;
 

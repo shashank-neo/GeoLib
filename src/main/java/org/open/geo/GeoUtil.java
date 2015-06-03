@@ -125,7 +125,7 @@ public class GeoUtil {
     Double lat = Math.atan2(Math.sin(lat1ToRad)+Math.sin(lat2ToRad),
         Math.sqrt( (Math.cos(lat1ToRad)+Bx)*(Math.cos(lat1ToRad)+Bx) + By*By) );
     Double lon = lon1ToRad + Math.atan2(By, Math.cos(lat1ToRad) + Bx);
-    lon = (lon+3*Math.PI) % (2*Math.PI) - Math.PI; // normalise to -180..+180°
+    lon = (lon+3*Math.PI) % (2*Math.PI) - Math.PI;
 
     return new LatLon(Math.toDegrees(lat), Math.toDegrees(lon));
   }
@@ -156,7 +156,7 @@ public class GeoUtil {
     if(radius == null) {
       radius = 6371000.00;
     }
-    Double distanceInRads = distance / radius; // angular distance in radians
+    Double distanceInRads = distance / radius;
     Double bearingInRads = Math.toRadians(bearing);
 
     Double lat1ToRad = Math.toRadians(source.getLatitude());
@@ -166,7 +166,7 @@ public class GeoUtil {
         Math.cos(lat1ToRad) * Math.sin(distanceInRads) * Math.cos(bearingInRads));
     Double lon = lon1ToRad + Math.atan2(Math.sin(bearingInRads) * Math.sin(distanceInRads) * Math.cos(lat1ToRad),
         Math.cos(distanceInRads) - Math.sin(lat1ToRad) * Math.sin(lat));
-    lon = (lon + 3 * Math.PI) % (2 * Math.PI) - Math.PI; // normalise to -180..+180°
+    lon = (lon + 3 * Math.PI) % (2 * Math.PI) - Math.PI;
 
     return new LatLon(Math.toDegrees(lat), Math.toDegrees(lon));
   }
@@ -233,7 +233,7 @@ public class GeoUtil {
         Math.cos(lat1ToRad) * Math.cos(lat2ToRad) * Math.sin(deltaLonToRad/2) * Math.sin(deltaLonToRad/2)));
     if (delta12 == 0.0) return null;
 
-    // initial/final bearings between points
+
     Double theta1 = Math.acos(( Math.sin(lat2ToRad) - Math.sin(lat1ToRad)*Math.cos(delta12)) /
         (Math.sin(delta12)*Math.cos(lat1ToRad)));
 
@@ -255,9 +255,6 @@ public class GeoUtil {
     if (Math.sin(alpha1)==0.0 && Math.sin(alpha2)==0.0) return null; // infinite intersections
     if (Math.sin(alpha1)*Math.sin(alpha2) < 0) return null;      // ambiguous intersection
 
-    //alpha1 = Math.abs(alpha1);
-    //alpha2 = Math.abs(alpha2);
-    // ... Ed Williams takes abs of alpha1/alpha2, but seems to break calculation?
 
     Double alpha3 = Math.acos( -Math.cos(alpha1)*Math.cos(alpha2) +
         Math.sin(alpha1)*Math.sin(alpha2)*Math.cos(delta12) );
@@ -333,7 +330,6 @@ public class GeoUtil {
     if(radius == null) {
       radius = 6371000.00;
     }
-    // see http://williams.best.vwh.net/avform.htm#Rhumb
 
     Double R = radius;
     Double lat1ToRad = Math.toRadians(source.getLatitude()), lat2ToRad = Math.toRadians(destination.getLatitude());
@@ -472,7 +468,7 @@ public class GeoUtil {
     Double lat1ToRad = Math.toRadians(source.getLatitude()), lon1ToRad = Math.toRadians(source.getLongitude());
     Double lat2ToRad = Math.toRadians(destination.getLatitude()), lon2ToRad = Math.toRadians(destination.getLongitude());
 
-    if (Math.abs(lon2ToRad-lon1ToRad) > Math.PI) lon1ToRad += 2*Math.PI; // crossing anti-meridian
+    if (Math.abs(lon2ToRad-lon1ToRad) > Math.PI) lon1ToRad += 2*Math.PI;
 
     Double lat = (lat1ToRad+lat2ToRad)/2;
     Double f1 = Math.tan(Math.PI/4 + lat1ToRad/2);
@@ -480,9 +476,9 @@ public class GeoUtil {
     Double f3 = Math.tan(Math.PI/4 + lat/2);
     Double lon = ((lon2ToRad-lon1ToRad)*Math.log(f3) + lon1ToRad*Math.log(f2) - lon2ToRad*Math.log(f1) ) / Math.log(f2/f1);
 
-    if (!Double.isFinite(lon)) lon = (lon1ToRad+lon2ToRad)/2; // parallel of latitude
+    if (!Double.isFinite(lon)) lon = (lon1ToRad+lon2ToRad)/2;
 
-    lon = (lon + 3*Math.PI) % (2*Math.PI) - Math.PI; // normalise to -180..+180°
+    lon = (lon + 3*Math.PI) % (2*Math.PI) - Math.PI;
 
     return new LatLon(Math.toDegrees(lat), Math.toDegrees(lon));
   }
