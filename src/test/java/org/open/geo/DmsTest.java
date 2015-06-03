@@ -48,7 +48,7 @@ public class DmsTest {
   public void toDmsTestOnlyDeg() {
     Double degrees = 40.7486;
     String dmsString = Dms.toDms(degrees, "d", 4);
-    assertEquals("041.0°", dmsString);
+    assertEquals("040.7486°", dmsString);
   }
 
   @Test
